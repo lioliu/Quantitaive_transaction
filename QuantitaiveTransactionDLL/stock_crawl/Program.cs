@@ -10,6 +10,9 @@ namespace stock_crawl
     {
         static void Main(string[] args)
         {
+            Web_crawl crawl = new Web_crawl();
+            crawl.run();
+            Console.ReadKey();
         }
     }
 }
