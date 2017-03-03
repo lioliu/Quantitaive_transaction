@@ -10,7 +10,7 @@ using System.Net.Security;
 using System.Linq;
 using System.Net.Cache;
 
-namespace stock_crawl
+namespace QuantitaiveTransactionDLL
 {
     /// <summary>
     /// Http连接操作帮助类

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using QuantitaiveTransactionDLL;
 namespace stock_crawl
 {
-    class Web_crawl
+    class base_crawl
     {
         HttpHelper http;
         HttpItem item;
-        public Web_crawl()
+        public base_crawl()
         {
             http = new HttpHelper();
             item = new HttpItem()
@@ -70,7 +70,6 @@ namespace stock_crawl
             string statusCodeDescription = result.StatusDescription;
             //把得到的Byte转成图片
         }
-
     }
 
 }
