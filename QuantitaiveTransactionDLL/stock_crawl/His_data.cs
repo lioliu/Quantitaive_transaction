@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 using System.Data;
 using Newtonsoft.Json;
 using QuantitaiveTransactionDLL;
+using System.Diagnostics;
+using System.Threading;
 
 namespace stock_crawl
 {
+  
+    
     class Kline
     {
         public string date { get; set; }
@@ -35,24 +39,37 @@ namespace stock_crawl
         {
             //clearn the data in database 
             ///add code here
+          
             DBUtility.execute_sql("DELETE FROM STOCK_HIS_DATA");
+           
             //get the stock list
+            
             DataSet stock_list = get_stock_list();
+            
             string total;
             for (int i = 0; i < stock_list.Tables[0].Rows.Count; i++)
             {
                 //run the web crawl to get the total date for the stock
+                //if (Convert.ToInt32(stock_list.Tables[0].Rows[i][0].ToString()) <= 600463) continue;
                 total = get_total_date(stock_list.Tables[0].Rows[i][0].ToString());
+               
+           
                 //run the web crawl with total data get all the his data
+                
                 DataTable dt = get_all_data(stock_list.Tables[0].Rows[i][0].ToString(), total);
+
                 //save data to database
-                Console.WriteLine(save_to_database(dt));
-                Console.WriteLine();
+                Task.Factory.StartNew(() => save_to_database(dt));
+
+                Console.WriteLine("success");
             }
 
 
         }
-        private static int save_to_database(DataTable dt)
+
+     
+
+        public static int save_to_database(DataTable dt)
         {
             string insert = string.Empty;
             List<string> insertscript = new List<string>();
@@ -62,7 +79,9 @@ namespace stock_crawl
                 insertscript.Add(insert);
                 
             }
-            return DBUtility.execute_sql(insertscript);
+            int result = DBUtility.execute_sql(insertscript);
+            Console.WriteLine(result);
+            return result;
 
         }
         /// <summary>
@@ -72,8 +91,9 @@ namespace stock_crawl
         /// <returns></returns>
         private static string get_total_date(string code)
         {
+            Random rnd = new Random();
             base_crawl crawl = new base_crawl();
-            string json = crawl.run("http://yunhq.sse.com.cn:32041/v1/sh1/dayk/"+code+"?callback=&select=date%2Copen%2Chigh%2Clow%2Cclose%2Cvolume&begin=-2&end=-1");
+            string json = crawl.run("http://yunhq.sse.com.cn:32041/v1/sh1/dayk/"+code+ "?callback=&select=date%2Copen%2Chigh%2Clow%2Cclose%2Cvolume&begin=-2&end=-1&_=" +rnd.Next() );
             json = Json_formater.his_data(json);
             His_data his_data = JsonConvert.DeserializeObject<His_data>(json);
             return his_data.total;
@@ -86,8 +106,9 @@ namespace stock_crawl
         /// <returns></returns>
         private static DataTable get_all_data(string code,string total)
         {
+            Random rnd = new Random();
             base_crawl crawl = new base_crawl();
-            string URL = String.Format("http://yunhq.sse.com.cn:32041/v1/sh1/dayk/{0}?callback=&select=date%2Copen%2Chigh%2Clow%2Cclose%2Cvolume&begin=-{1}&end=-1",code,total);
+            string URL = String.Format("http://yunhq.sse.com.cn:32041/v1/sh1/dayk/{0}?callback=&select=date%2Copen%2Chigh%2Clow%2Cclose%2Cvolume&begin=-{1}&end=-1&_={2}", code,total,rnd.Next());
             string json = crawl.run(URL);
             json = Json_formater.his_data(json);
             His_data his_data = JsonConvert.DeserializeObject<His_data>(json);

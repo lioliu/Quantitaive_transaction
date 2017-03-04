@@ -13,7 +13,7 @@ namespace stock_crawl
         static void Main(string[] args)
         {
             His_data.load_hisdata();
-            Console.WriteLine("sucess");
+            Console.WriteLine("sucess_total");
             Console.ReadLine();
 
             //base_crawl crawl = new base_crawl();
