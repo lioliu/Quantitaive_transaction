@@ -5,65 +5,50 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Data;
+using QuantitaiveTransactionDLL;
 namespace stock_crawl
 {
     class Program
     {
         static void Main(string[] args)
         {
-            base_crawl crawl = new base_crawl();
-            string json = crawl.run("http://yunhq.sse.com.cn:32041/v1/sh1/dayk/600004?callback=&select=date%2Copen%2Chigh%2Clow%2Cclose%2Cvolume&begin=-3&end=-1&_=1488544393177");
+            His_data.load_hisdata();
+            Console.WriteLine("sucess");
+            Console.ReadLine();
 
-            //Console.WriteLine();
-            // string json = "{\"code\":\"600004\",\"total\":3316,\"begin\":3315,\"end\":3316,\"kline\":[{\"date\":\"20170303\",\"start\":\"14.84\",\"high\":\"14.99\",\"low\":\"14.72\",\"close\":\"14.94\",\"amount\":\"4304419\"},{\"date\":\"20170302\",\"start\":\"15.08\",\"high\":\"15.09\",\"low\":\"14.85\",\"close\":\"14.90\",\"amount\":\"4960148\"}]}";
-
-            //delete header
-            json = json.Remove(0, json.IndexOf("(") + 1).Replace(")", "");
-            //change '[' / ']' to '{'/'}' except the first and the last one
-            json = json.Insert(json.IndexOf("["), "(");
-            json = json.Insert(json.LastIndexOf("]") + 1, ")").Replace("[", "{").Replace("]", "}").Replace("({", "[").Replace("})", "]").Replace("\"", "").Replace(",", "\",\"").Replace(":", "\":\"").Insert(1, "\"").Replace("\"[", "[").Replace("}", "\"}").Replace("}\",\"{", "},{").Replace("]\"}","]}");
-            int state = -1;
-            for (int i = 5; i < json.Length; i++)
-            {
-
-                if (json[i] == '{')
-                {
-                    json = json.Insert(i + 1, "\"date\":\"");
-                    state = 0;
-                }
-                else if (json[i] == ',')
-                {
-                    switch (state)
-                    {
-                        case 0:
-                            json = json.Insert(i + 1, "\"start\":");
-                            state++;
-                            break;
-                        case 1:
-                            json = json.Insert(i + 1, "\"high\":");
-                            state++;
-                            break;
-                        case 2:
-                            json = json.Insert(i + 1, "\"low\":");
-                            state++;
-                            break;
-                        case 3:
-                            json = json.Insert(i + 1, "\"close\":");
-                            state++;
-                            break;
-                        case 4:
-                            json = json.Insert(i + 1, "\"amount\":");
-                            state = 0;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                else if (json[i] == '}') state = -1;
-            }
-            Console.WriteLine(json);
-            Console.WriteLine("{\"code\":\"600004\",\"total\":\"3316\",\"begin\":\"3315\",\"end\":\"3316\",\"kline\":[{\"date\":\"20170303\",\"start\":\"14.84\",\"high\":\"14.99\",\"low\":\"14.72\",\"close\":\"14.94\",\"amount\":\"4304419\"},{\"date\":\"20170302\",\"start\":\"15.08\",\"high\":\"15.09\",\"low\":\"14.85\",\"close\":\"14.90\",\"amount\":\"4960148\"}]}");
-            Console.ReadKey();
+            //base_crawl crawl = new base_crawl();
+            //string json = crawl.run("http://yunhq.sse.com.cn:32041/v1/sh1/dayk/600010?callback=&select=date%2Copen%2Chigh%2Clow%2Cclose%2Cvolume&begin=-100&end=-1");
+            //json = Json_formater.his_data(json);
+            //His_data his_data = JsonConvert.DeserializeObject<His_data>(json);
+            //DataTable dt = new DataTable("stock_data");
+            //dt.Columns.Add("CODE", Type.GetType("System.String"));
+            //dt.Columns.Add("DAYS", Type.GetType("System.DateTime"));
+            //dt.Columns.Add("OPEN", Type.GetType("System.Double"));
+            //dt.Columns.Add("HIGH", Type.GetType("System.Double"));
+            //dt.Columns.Add("LOW", Type.GetType("System.Double"));
+            //dt.Columns.Add("CLOSE", Type.GetType("System.Double"));
+            //dt.Columns.Add("AMOUNT", Type.GetType("System.Double"));
+            //DataRow Newrow;
+            //foreach (var item in his_data.kline)
+            //{
+            //    Newrow = dt.NewRow();
+            //    Newrow["CODE"] = his_data.code;
+            //    Newrow["DAYS"] = new DateTime(Convert.ToInt16(item.date.Substring(0, 4)),Convert.ToInt16( item.date.Substring(4, 2)),Convert.ToInt16( item.date.Substring(6, 2)));
+            //    Newrow["OPEN"] = Convert.ToDouble(item.open);
+            //    Newrow["HIGH"] = Convert.ToDouble(item.high);
+            //    Newrow["LOW"] = Convert.ToDouble(item.low);
+            //    Newrow["CLOSE"] = Convert.ToDouble(item.close);
+            //    Newrow["AMOUNT"] = Convert.ToDouble(item.amount);
+            //    dt.Rows.Add(Newrow);
+            //}
+            //Console.WriteLine("Code:" + his_data.code);
+            //for (int i = 0; i < dt.Rows.Count; i++)
+            //{
+            //    Console.WriteLine(string.Format("date:{0},open:{1},high:{2},low:{3},close:{4},amount:{5}", dt.Rows[i]["DAYS"], dt.Rows[i]["OPEN"], dt.Rows[i]["HIGH"], dt.Rows[i]["LOW"], dt.Rows[i]["CLOSE"], dt.Rows[i]["AMOUNT"]));
+            //}
+            //Console.ReadKey();
+            //Console.WriteLine(json);
+            //Console.ReadKey();
             //Console.WriteLine(json);
             //His_data his_data = JsonConvert.DeserializeObject<His_data>(json);
             //Console.WriteLine(his_data.code);
@@ -97,6 +82,6 @@ namespace stock_crawl
         }
 
 
-        
+
     }
 }

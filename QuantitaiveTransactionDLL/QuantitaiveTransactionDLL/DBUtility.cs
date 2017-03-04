@@ -75,7 +75,8 @@ namespace QuantitaiveTransactionDLL
             catch (Exception error)
             {
                 transaction.Rollback();
-                LogMessage(error.Message, "log-error");
+                Console.Write(error);
+                //LogMessage(error.Message, "log-error");
                 throw;
             }
             finally
@@ -280,12 +281,12 @@ namespace QuantitaiveTransactionDLL
             //    fs1.Close();
             //}
             //写入日志文件
-            string path = string.Format("\\log\\{1}_{0}.txt", DateTime.Now.Date.ToString("yyyyMMdd"), type);
-            System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Append);
-            System.IO.StreamWriter sw = new System.IO.StreamWriter(fs, System.Text.Encoding.Default);
-            sw.WriteLine(outPutStr);
-            sw.Close();
-            fs.Close();
+            //string path = string.Format("../log/{1}_{0}.txt", DateTime.Now.Date.ToString("yyyyMMdd"), type);
+            //System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Append);
+            //System.IO.StreamWriter sw = new System.IO.StreamWriter(fs, System.Text.Encoding.Default);
+            //sw.WriteLine(outPutStr);
+            //sw.Close();
+            //fs.Close();
         }
     }
 }

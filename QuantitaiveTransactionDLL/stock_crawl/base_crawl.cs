@@ -61,7 +61,7 @@ namespace stock_crawl
             string cookie = result.Cookie;
             //返回的Html内容
             string html = result.Html;
-            Console.WriteLine(html);
+        //    Console.WriteLine(html);
             if (result.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 //表示访问成功，具体的大家就参考HttpStatusCode类
