@@ -20,9 +20,9 @@ namespace stock_crawl
     class His_data
     {
         public string code { set; get; }
-        public int total { set; get; }
-        public int begin { set; get; }
-        public int end { set; get; }
+        public string total { set; get; }
+        public string begin { set; get; }
+        public string end { set; get; }
         public Kline[] kline { set; get; }
     }
    

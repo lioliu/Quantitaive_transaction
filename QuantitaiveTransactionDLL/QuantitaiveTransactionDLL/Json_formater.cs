@@ -10,7 +10,8 @@ namespace QuantitaiveTransactionDLL
     {
         public static string formatting_to_Json(string str)
         {
-
+            //delete the header
+            str.Remove(0,str.IndexOf("("));
             return str;
         }
     }

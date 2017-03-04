@@ -53,7 +53,7 @@ namespace stock_crawl
         /// run the web_crawl to get the data from the given URL
         /// </summary>
         /// <param name="URL"></param>
-        public void run(string URL)
+        public string run(string URL)
         {
             item.URL = URL;
             HttpResult result = http.GetHtml(item);
@@ -69,6 +69,7 @@ namespace stock_crawl
             //表示StatusCode的文字说明与描述
             string statusCodeDescription = result.StatusDescription;
             //把得到的Byte转成图片
+            return html;
         }
     }
 
