@@ -17,7 +17,7 @@ namespace stock_crawl
         static void Main(string[] args)
         {
             Stopwatch sw = new Stopwatch();
-            Snap_data.load_snapdata();
+            Snap_data.run_snapdata();
    
             Console.WriteLine("success");
        

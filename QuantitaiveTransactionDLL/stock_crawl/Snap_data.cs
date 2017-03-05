@@ -90,7 +90,7 @@ namespace stock_crawl
         public string error_code { set; get; }
         public Result[] result { set; get; }
 
-        public static void load_snapdata()
+        public static void run_snapdata()
         {
             DataSet stock_list = DBUtility.get_stock_list();
             string[] list = new string[stock_list.Tables[0].Rows.Count];
@@ -98,11 +98,12 @@ namespace stock_crawl
             {
                 list[i] = stock_list.Tables[0].Rows[i][0].ToString();
             }
+            
             foreach (var item in list)
             {
                 Task.Factory.StartNew(()=>get_Snap(item));
             }
-       
+         
         }
         public static void get_Snap(string code)
         {
