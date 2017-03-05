@@ -68,7 +68,7 @@ namespace stock_crawl
 
      
 
-        public static int save_to_database(DataTable dt)
+        private static int save_to_database(DataTable dt)
         {
             string insert = string.Empty;
             List<string> insertscript = new List<string>();
