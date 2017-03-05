@@ -257,36 +257,15 @@ namespace QuantitaiveTransactionDLL
         /// <param name="type">log type</param>
         public static void LogMessage(string outPutStr, string type)
         {
-            /*write log as file !!! not use database*/
-            //try
-            //{
-            //    //连接日志数据库语句
-            //    SqlConnection con = new SqlConnection("Server=202.121.241.77;Database=YANG\\SQLEXPRESS_SSPU;uid=datashow;pwd=TopoDA4SSPU.");
-            //    string[] str = outPutStr.Split(',');
-            //    string sql = string.Format("INSERT INTO [log] ([STUNO],[NAME],[IP],[Brower],[System],[Time],[other],[type]) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}')", str[0], str[1], str[2], str[3], str[4], str[5], str[6], type);
-            //    SqlCommand cmd = new SqlCommand(sql, con);
-            //    con.Open();
-            //    cmd.ExecuteNonQuery();
-            //    con.Dispose();
-            //}
-            //catch (Exception e)
-            //{
-            //    //写入日志文件
-            //    string path1 = string.Format("../log/{0}_SystemError.txt", DateTime.Now.ToString("yyyyMMdd"));
-            //    string strFilePath1 = System.Web.HttpContext.Current.Server.MapPath(path1);
-            //    System.IO.FileStream fs1 = new System.IO.FileStream(strFilePath1, System.IO.FileMode.Append);
-            //    System.IO.StreamWriter sw1 = new System.IO.StreamWriter(fs1, System.Text.Encoding.Default);
-            //    sw1.WriteLine(e.Message);
-            //    sw1.Close();
-            //    fs1.Close();
-            //}
-            //写入日志文件
-            //string path = string.Format("../log/{1}_{0}.txt", DateTime.Now.Date.ToString("yyyyMMdd"), type);
-            //System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Append);
-            //System.IO.StreamWriter sw = new System.IO.StreamWriter(fs, System.Text.Encoding.Default);
-            //sw.WriteLine(outPutStr);
-            //sw.Close();
-            //fs.Close();
+          
         }
+
+        public static DataSet get_stock_list()
+        {
+            DataSet ds = get_data("select Code from stock_list");
+            return ds;
+        }
+
+
     }
 }

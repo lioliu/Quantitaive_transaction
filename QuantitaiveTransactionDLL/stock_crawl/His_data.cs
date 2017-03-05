@@ -41,10 +41,10 @@ namespace stock_crawl
             ///add code here
           
             DBUtility.execute_sql("DELETE FROM STOCK_HIS_DATA");
-           
+
             //get the stock list
-            
-            DataSet stock_list = get_stock_list();
+
+            DataSet stock_list = DBUtility.get_stock_list();
             
             string total;
             for (int i = 0; i < stock_list.Tables[0].Rows.Count; i++)
@@ -63,7 +63,6 @@ namespace stock_crawl
 
                 Console.WriteLine("success");
             }
-
 
         }
 
@@ -116,17 +115,6 @@ namespace stock_crawl
             return dt;
         }
 
-       
-     
-        /// <summary>
-        /// get stock list
-        /// </summary>
-        /// <returns>the stock code list</returns>
-        private static DataSet get_stock_list()
-        {
-            DataSet ds = DBUtility.get_data("select Code from stock_list");
-            return ds;
-        }
         /// <summary>
         /// 
         /// </summary>
@@ -157,34 +145,7 @@ namespace stock_crawl
             }
             return dt;
         }
-        //His_data his_data = JsonConvert.DeserializeObject<His_data>(json);
-        //Console.WriteLine(his_data.code);
-        //DataTable dt = new DataTable("stock_data");
-        //dt.Columns.Add("date",Type.GetType("System.String"));
-        //dt.Columns.Add("start", Type.GetType("System.String"));
-        //dt.Columns.Add("high", Type.GetType("System.String"));
-        //dt.Columns.Add("low", Type.GetType("System.String"));
-        //dt.Columns.Add("close", Type.GetType("System.String"));
-        //dt.Columns.Add("amount", Type.GetType("System.String"));
-        //DataRow newrow;
-        //foreach (var item in his_data.kline)
-        //{
-        //    Console.WriteLine(string.Format("strat:{0},high:{1},low:{2},close:{3},amount:{4}", item.start, item.high, item.low, item.close, item.amount));
-        //    newrow = dt.NewRow();
-        //    newrow["date"] = item.date;
-        //    newrow["high"] = item.high;
-        //    newrow["low"] = item.low;
-        //    newrow["start"] = item.start;
-        //    newrow["close"] = item.close;
-        //    newrow["amount"] = item.amount;
-        //    dt.Rows.Add(newrow);
-        //}
-        //Console.WriteLine();
-        //for (int i = 0; i < dt.Rows.Count; i++)
-        //{
-        //    Console.WriteLine(string.Format("strat:{0},high:{1},low:{2},close:{3},amount:{4}", dt.Rows[i]["start"], dt.Rows[i]["high"], dt.Rows[i]["low"], dt.Rows[i]["close"], dt.Rows[i]["amount"]));
-
-        //}
+    
 
 
     }
