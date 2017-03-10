@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
-namespace stock_crawl
+namespace QuantitaiveTransactionDLL
 {
     class Line
     {

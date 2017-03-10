@@ -9,7 +9,7 @@ using QuantitaiveTransactionDLL;
 using System.Diagnostics;
 using System.Threading;
 
-namespace stock_crawl
+namespace QuantitaiveTransactionDLL
 {
   
     

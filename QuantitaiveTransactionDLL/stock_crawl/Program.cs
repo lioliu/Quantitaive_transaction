@@ -16,7 +16,9 @@ namespace stock_crawl
     {
         static void Main(string[] args)
         {
-            Line_data.load_line_data();
+            //Line_data.load_line_data();
+            His_data.Convert_linedata_to_hisdata();
+            Console.WriteLine("success");
             Console.ReadLine();
 
         }
