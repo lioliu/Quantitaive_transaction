@@ -21,12 +21,12 @@ namespace QuantitaiveTransactionDLL
         const string QueryReceiveUri = APIUri + "QueryReceiveStatus";
         const string QueryBalanceUri = APIUri + "QueryBalance";
         /// <summary>
-        /// sent message 
+        /// Sent message to the mobile phone
         /// </summary>
         /// <param name="telephone">target number</param>
         /// <param name="code">the message to sent</param>
         /// <returns></returns>
-        public bool Send(string telephone, string message)
+        public static bool Send(string telephone, string message)
         {
             using (WebClient wc = CreateWebClient())
             {
@@ -49,7 +49,7 @@ namespace QuantitaiveTransactionDLL
                 msg.MsgId = Guid.NewGuid().ToString();
 
                 //sign must have 【 】
-                msg.Sign = "【股票提醒机】";
+                msg.Sign = "【股票预警】";
                 
                 json = JsonConvert.SerializeObject(msg);
                 string resultJson = InvokeAPI(wc, SendUri, json);
@@ -59,7 +59,7 @@ namespace QuantitaiveTransactionDLL
             }
         }
 
-        WebClient CreateWebClient()
+        public static WebClient CreateWebClient()
         {
             //Web request
             string url = "http://sms.sspu.edu.cn";
@@ -79,7 +79,7 @@ namespace QuantitaiveTransactionDLL
         /// <param name="uri">api adrress</param>
         /// <param name="requestJson">api</param>
         /// <returns>api format jason</returns>
-        string InvokeAPI(WebClient wc, string uri, string requestJson)
+        static string InvokeAPI(WebClient wc, string uri, string requestJson)
         {
             string resultJson = wc.UploadString(uri, "post", requestJson);
             return resultJson;
@@ -89,7 +89,7 @@ namespace QuantitaiveTransactionDLL
         /// set account 
         /// </summary>
         /// <param name="request"></param>
-        void SetAccountInfo(BaseMessage request)
+        static void SetAccountInfo(BaseMessage request)
         {
             //this is a given account
 
