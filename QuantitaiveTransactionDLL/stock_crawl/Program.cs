@@ -16,24 +16,12 @@ namespace stock_crawl
     {
         static void Main(string[] args)
         {
+
             //Line_data.load_line_data();
             His_data.Convert_linedata_to_hisdata();
-            Console.WriteLine("success");
+           // Console.WriteLine(Line_data.dataCount("600000", "20170309"));
             Console.ReadLine();
 
         }
-
-        /// <summary>
-        /// Http (GET/POST)
-        /// </summary>
-        /// <param name="url">请求URL</param>
-        /// <param name="parameters">请求参数</param>
-        /// <param name="method">请求方法</param>
-        /// <returns>响应内容</returns>
-  
-
-
-
-
     }
 }

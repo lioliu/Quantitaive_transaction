@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantitaiveTransactionDLL",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "stock_crawl_demo", "stock_crawl\stock_crawl_demo.csproj", "{C2B71E7B-473A-4033-B0D7-C12DA97AFC3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crawler", "Crawler\Crawler.csproj", "{35085D78-2C5E-4B9A-B828-CDBFC7C9EB16}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crawler", "Crawler\Crawler.csproj", "{5C8A0796-56D9-49AE-8D76-EC0A78AA628C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{C2B71E7B-473A-4033-B0D7-C12DA97AFC3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2B71E7B-473A-4033-B0D7-C12DA97AFC3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2B71E7B-473A-4033-B0D7-C12DA97AFC3D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{35085D78-2C5E-4B9A-B828-CDBFC7C9EB16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{35085D78-2C5E-4B9A-B828-CDBFC7C9EB16}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{35085D78-2C5E-4B9A-B828-CDBFC7C9EB16}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{35085D78-2C5E-4B9A-B828-CDBFC7C9EB16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C8A0796-56D9-49AE-8D76-EC0A78AA628C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C8A0796-56D9-49AE-8D76-EC0A78AA628C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C8A0796-56D9-49AE-8D76-EC0A78AA628C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C8A0796-56D9-49AE-8D76-EC0A78AA628C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

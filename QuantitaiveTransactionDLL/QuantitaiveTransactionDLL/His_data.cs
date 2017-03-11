@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using Newtonsoft.Json;
-using QuantitaiveTransactionDLL;
 using System.Diagnostics;
 using System.Threading;
 
@@ -13,7 +12,7 @@ namespace QuantitaiveTransactionDLL
 {
   
     
-    class Kline
+    public class Kline
     {
         public string date { get; set; }
         public double open { set; get; }
@@ -24,7 +23,7 @@ namespace QuantitaiveTransactionDLL
         public double amount { set; get; }
 
     }
-    class His_data
+    public class His_data
     {
         public string code { set; get; }
         public string total { set; get; }

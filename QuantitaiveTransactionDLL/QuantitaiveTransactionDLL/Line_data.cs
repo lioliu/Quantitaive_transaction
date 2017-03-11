@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 using System.Threading;
 namespace QuantitaiveTransactionDLL
 {
-    class Line
+    public class Line
     {
         public string time { set; get; }
         public string price { set; get; }
         public string volume { set; get; }
     }
-    class Line_data
+    public class Line_data
     {
         public string code { set; get; }
         public string pre_close { set; get; }
@@ -25,6 +25,11 @@ namespace QuantitaiveTransactionDLL
         public string begin { set; get; }
         public string end { set; get; }
         public Line[] line { set; get; }
+
+        public static void loadLineData(string code)
+        {
+
+        }
 
         //take 4 mins
         public static void load_line_data()
@@ -60,7 +65,7 @@ namespace QuantitaiveTransactionDLL
             return dt;
         }
 
-        private static DataTable get_line_data(string code)
+        public static DataTable get_line_data(string code)
         {
             Random rnd = new Random();
             base_crawl crawl = new base_crawl();
@@ -98,6 +103,26 @@ namespace QuantitaiveTransactionDLL
             Console.WriteLine(result);
             return result;
 
+        }
+        public static int save_to_database(DataTable dt,int Saved)
+        {
+            string insert = string.Empty;
+            List<string> insertscript = new List<string>();
+            for (int i = Saved; i < dt.Rows.Count; i++)
+            {
+                insert = "INSERT INTO STOCK_LINE_DATA VALUES" + string.Format("('{0}','{1}','{2}','{3}','{4}')", dt.Rows[i]["CODE"], dt.Rows[i]["DAYS"], dt.Rows[i]["TIME"], dt.Rows[i]["PRICE"], dt.Rows[i]["VOLUME"]);
+                insertscript.Add(insert);
+            }
+            int result = DBUtility.execute_sql(insertscript);
+            return result;
+
+        }
+
+        public static int dataCount(string code,string date)
+        {
+            string sql = string.Format("select count(*) from stock_line_data where code = {0} and days = {1}",code,date);
+            DataSet ds = DBUtility.get_data(sql);
+            return Convert.ToInt32( ds.Tables[0].Rows[0][0].ToString());
         }
 
     }
