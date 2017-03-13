@@ -14,18 +14,34 @@ namespace Crawler
         Timer timer1;
         public GetLineData()
         {
+            using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
+            {
+                sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "init the  timer.");
+            }
             //init the timer
             timer1 = new Timer();
             timer1.Interval = 1000 * 60 * 3;  //run every minute
             timer1.Elapsed += new ElapsedEventHandler(timer1_Elapsed);
+            timer1.AutoReset = true;
             timer1.Enabled = true;
+            using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
+            {
+                sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "timer init ended .");
+            }
         }
 
         private void timer1_Elapsed(object sender, ElapsedEventArgs e)
         {
+            using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
+            {
+                sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "the timer is runed.");
+            }
             int saved;
-            string sysdate = DateTime.Today.Year.ToString() +                   DateTime.Today.Month.ToString().PadLeft(2, '0') +
-              DateTime.Today.Day.ToString().PadLeft(2, '0');
+            string sysdate = DateTime.Now.ToString("yyyyMMdd");
+            using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
+            {
+                sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "today is ."+sysdate);
+            }
             if (TradeDay(sysdate) ==false)
             {
                 using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
@@ -66,13 +82,13 @@ namespace Crawler
                 return;
             }
         }
-
         private Boolean TradeDay(string sysdate)
         {
-            Boolean result=false;
-            Line_data line = Line_data.get_line_data_object("000001");    
-            result = line.date.ToString().Equals(sysdate)?true:false;
+            Boolean result = false;
+            Line_data line = Line_data.get_line_data_object("000001");
+            result = line.date.ToString().Equals(sysdate) ? true : false;
             return result;
         }
+
     }
 }

@@ -90,9 +90,10 @@ namespace QuantitaiveTransactionDLL
         public string error_code { set; get; }
         public Result[] result { set; get; }
 
-        public static void run_snapdata()
+        private static void run_snapdata()
         {
             DataSet stock_list = DBUtility.get_stock_list();
+            stock_list.Tables[0].Select();
             string[] list = new string[stock_list.Tables[0].Rows.Count];
             for (int i = 0; i < stock_list.Tables[0].Rows.Count; i++)
             {
@@ -101,11 +102,11 @@ namespace QuantitaiveTransactionDLL
             
             foreach (var item in list)
             {
-                Task.Factory.StartNew(()=>get_Snap(item));
+                Task.Factory.StartNew(()=> GetSnap(item));
             }
          
         }
-        public static void get_Snap(string code)
+        public static Snap_data GetSnap(string code)
         {
             var parameters1 = new Dictionary<string, string>();
             string query_code = "sh" + code;
@@ -116,7 +117,8 @@ namespace QuantitaiveTransactionDLL
             string result1 = Snap_data.sendPost(url1, parameters1, "get");
             //Console.WriteLine(result1); used for debug
             Snap_data snap_data = JsonConvert.DeserializeObject<Snap_data>(result1);
-            Console.WriteLine(snap_data.result[0].data.name);
+            return snap_data;
+            //Console.WriteLine(snap_data.result[0].data.name);
         }
 
        

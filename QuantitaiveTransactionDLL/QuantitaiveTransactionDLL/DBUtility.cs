@@ -266,5 +266,16 @@ namespace QuantitaiveTransactionDLL
             return ds;
         }
 
+        public static string[] GetStockList()
+        {
+            DataSet ds = get_data("select Code , Name from stock_list");
+            string[] list = new string[ds.Tables[0].Rows.Count];
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                list[i] = ds.Tables[0].Rows[i][0].ToString()+" "+ ds.Tables[0].Rows[i][1].ToString();
+            }
+            return list;
+        }
+
     }
 }
