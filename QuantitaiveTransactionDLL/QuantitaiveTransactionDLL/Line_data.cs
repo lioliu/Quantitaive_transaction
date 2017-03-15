@@ -25,12 +25,6 @@ namespace QuantitaiveTransactionDLL
         public string begin { set; get; }
         public string end { set; get; }
         public Line[] line { set; get; }
-
-        public static void loadLineData(string code)
-        {
-
-        }
-
         //take 4 mins
         public static void load_line_data()
         {
@@ -77,7 +71,7 @@ namespace QuantitaiveTransactionDLL
             DataTable dt = covert_to_datatable(line_data);
             return dt;
         }
-        public static Line_data get_line_data_object(string code)
+        public static Line_data GetLineDataObject(string code)
         {
             Random rnd = new Random();
             base_crawl crawl = new base_crawl();
@@ -100,7 +94,7 @@ namespace QuantitaiveTransactionDLL
 
             }
             int result = DBUtility.execute_sql(insertscript);
-            Console.WriteLine(result);
+            //Console.WriteLine(result);
             return result;
 
         }

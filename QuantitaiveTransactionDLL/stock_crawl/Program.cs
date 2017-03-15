@@ -47,12 +47,5 @@ namespace stock_crawl
 
         }
 
-        private static Boolean TradeDay(string sysdate)
-        {
-            Boolean result = false;
-            Line_data line = Line_data.get_line_data_object("000001");
-            result = line.date.ToString().Equals(sysdate) ? true : false;
-            return result;
-        }
     }
 }

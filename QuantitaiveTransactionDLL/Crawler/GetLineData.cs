@@ -11,7 +11,7 @@ namespace Crawler
 {
     class GetLineData
     {
-        Timer timer1;
+        Timer crawl;
         public GetLineData()
         {
             using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
@@ -19,18 +19,18 @@ namespace Crawler
                 sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "init the  timer.");
             }
             //init the timer
-            timer1 = new Timer();
-            timer1.Interval = 1000 * 60 * 3;  //run every minute
-            timer1.Elapsed += new ElapsedEventHandler(timer1_Elapsed);
-            timer1.AutoReset = true;
-            timer1.Enabled = true;
+            crawl = new Timer();
+            crawl.Interval = 1000*60*5;  //run every  5 minute
+            crawl.Elapsed += new ElapsedEventHandler(crawl_run);
+            crawl.AutoReset = true;
+            crawl.Enabled = true;
             using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
             {
                 sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "timer init ended .");
             }
         }
 
-        private void timer1_Elapsed(object sender, ElapsedEventArgs e)
+        private void crawl_run(object sender, ElapsedEventArgs e)
         {
             using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
             {
@@ -38,24 +38,18 @@ namespace Crawler
             }
             int saved;
             string sysdate = DateTime.Now.ToString("yyyyMMdd");
-            using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
-            {
-                sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "today is ."+sysdate);
-            }
             if (TradeDay(sysdate) ==false)
             {
                 using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
                 {
                     sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "not a trade date stop run crawler.");
                 }
-                timer1.Enabled = false;
-                timer1.Dispose();
+                crawl.Enabled = false;
+                crawl.Dispose();
                 return;
             }
             using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
-            {
-                sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + " crawler running.");
-            }
+            {sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + " crawler running.");}
             //get stock list
             DataSet ds = DBUtility.get_stock_list();
             List<string> stockList = new List<string> { };
@@ -70,25 +64,30 @@ namespace Crawler
                 Line_data.save_to_database(dt, saved);
                 if (saved == 241) stockList.Remove(item);
             }
-            if(stockList.Count == 0)
+            if (DateTime.Now.Hour == 15 && (DateTime.Now.Minute >=30 && DateTime.Now.Minute < 35))
             {
                 using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
-                {
-                    sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "all data has been got stop the crawler.");
-                }
+                { sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + " the trade is end  reinsert the line data."); }
+                Line_data.load_line_data();
+
+            }
+            if(DateTime.Now.Hour == 16)
+            {
+                using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
+                { sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + " the insert line data finished convert the line data to his data."); }
                 His_data.Convert_linedata_to_hisdata();
-                timer1.Enabled = false;
-                timer1.Dispose();
+                crawl.Enabled = false;
+                crawl.Dispose();
+                using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
+                { sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + " the crawler stoped."); }
                 return;
             }
         }
         private Boolean TradeDay(string sysdate)
         {
-            Boolean result = false;
-            Line_data line = Line_data.get_line_data_object("000001");
-            result = line.date.ToString().Equals(sysdate) ? true : false;
-            return result;
+            return Line_data.GetLineDataObject("000001").date.ToString().Equals(sysdate) ? true : false; 
         }
 
+        
     }
 }

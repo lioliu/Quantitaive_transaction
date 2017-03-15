@@ -33,7 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="QuantitaiveTransactionDLL">
+    <Reference Include="QuantitaiveTransactionDLL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\QuantitaiveTransactionDLL\bin\Debug\QuantitaiveTransactionDLL.dll</HintPath>
     </Reference>
     <Reference Include="System" />

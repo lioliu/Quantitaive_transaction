@@ -15,7 +15,7 @@ namespace QuantitaiveTransactionDLL
         /// </summary>
         private static string connect_string = "Data Source=( DESCRIPTION = ( ADDRESS = ( PROTOCOL = TCP ) ( HOST = 10.18.3.229 ) ( PORT = 1521 ) ) ( CONNECT_DATA = ( SERVICE_NAME=ORCL ) ) );" +
             "user id=lioliu;password=647094;"; 
-        private static string power_connect_string = "Data Source=( DESCRIPTION = ( ADDRESS = ( PROTOCOL = TCP ) ( HOST = 10.18.3.229 ) ( PORT = 1521 ) ) ( CONNECT_DATA = ( SERVICE_NAME=ORCL ) ) );" +
+        public static string power_connect_string = "Data Source=( DESCRIPTION = ( ADDRESS = ( PROTOCOL = TCP ) ( HOST = 10.18.3.229 ) ( PORT = 1521 ) ) ( CONNECT_DATA = ( SERVICE_NAME=ORCL ) ) );" +
             "user id=lioliu;password=647094;";
         #region Execute sql
         /// <summary>
