@@ -66,6 +66,7 @@ namespace Crawler
             }
             if (DateTime.Now.Hour == 15 && (DateTime.Now.Minute >=30 && DateTime.Now.Minute < 35))
             {
+                DBUtility.execute_sql(string.Format("delete from stock_line_data where days ='{0}'", sysdate));
                 using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
                 { sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + " the trade is end  reinsert the line data."); }
                 Line_data.load_line_data();
