@@ -47,7 +47,7 @@ namespace Crawler
         {
             //wirte code here
             GetLineData get = null;
-            if (DateTime.Now.Hour == 9 && DateTime.Now.Minute == 30)
+            if (DateTime.Now.Hour == 09 && DateTime.Now.Minute == 30)
             {
                 using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
                 {

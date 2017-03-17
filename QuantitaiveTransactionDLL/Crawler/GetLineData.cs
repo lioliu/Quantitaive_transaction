@@ -50,29 +50,8 @@ namespace Crawler
             }
             using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
             {sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + " crawler running.");}
-            //get stock list
-            DataSet ds = DBUtility.get_stock_list();
-            List<string> stockList = new List<string> { };
-            for(int i = 0; i < ds.Tables[0].Rows.Count; i++)
-            {
-                stockList.Add(ds.Tables[0].Rows[i][0].ToString());
-            }
-            foreach (var item in stockList)
-            {
-                saved = Line_data.dataCount(item, sysdate);
-                DataTable dt = Line_data.get_line_data(item);
-                Line_data.save_to_database(dt, saved);
-                if (saved == 241) stockList.Remove(item);
-            }
-            if (DateTime.Now.Hour == 15 && (DateTime.Now.Minute >=30 && DateTime.Now.Minute < 35))
-            {
-                DBUtility.execute_sql(string.Format("delete from stock_line_data where days ='{0}'", sysdate));
-                using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
-                { sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + " the trade is end  reinsert the line data."); }
-                Line_data.load_line_data();
 
-            }
-            if(DateTime.Now.Hour == 16)
+            if (DateTime.Now.Hour == 16)
             {
                 using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
                 { sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + " the insert line data finished convert the line data to his data."); }
@@ -82,6 +61,31 @@ namespace Crawler
                 using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
                 { sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + " the crawler stoped."); }
                 return;
+            }
+            else if (DateTime.Now.Hour == 15 && (DateTime.Now.Minute >= 30 && DateTime.Now.Minute < 35))
+            {
+                DBUtility.execute_sql(string.Format("delete from stock_line_data where days ='{0}'", sysdate));
+                using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
+                { sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + " the trade is end  reinsert the line data."); }
+                Line_data.load_line_data();
+
+            }
+            else
+            {
+                //get stock list
+                DataSet ds = DBUtility.get_stock_list();
+                List<string> stockList = new List<string> { };
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    stockList.Add(ds.Tables[0].Rows[i][0].ToString());
+                }
+                foreach (var item in stockList)
+                {
+                    saved = Line_data.dataCount(item, sysdate);
+                    DataTable dt = Line_data.get_line_data(item);
+                    Line_data.save_to_database(dt, saved);
+                    if (saved == 241) stockList.Remove(item);
+                }
             }
         }
         private Boolean TradeDay(string sysdate)
