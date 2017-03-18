@@ -12,6 +12,9 @@ namespace Crawler
     class GetLineData
     {
         Timer crawl;
+        /// <summary>
+        /// main function
+        /// </summary>
         public GetLineData()
         {
             using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
