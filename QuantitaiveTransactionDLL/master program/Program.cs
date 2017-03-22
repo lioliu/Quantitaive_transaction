@@ -17,7 +17,7 @@ namespace master_program
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //mode here to change the run form
-            Application.Run(new StockDetail());
+            Application.Run(new StockLine());
         }
     }
 }

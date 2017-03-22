@@ -60,11 +60,16 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NPlot">
+      <HintPath>..\master program\bin\Debug\NPlot.dll</HintPath>
+    </Reference>
     <Reference Include="QuantitaiveTransactionDLL">
       <HintPath>..\QuantitaiveTransactionDLL\bin\Debug\QuantitaiveTransactionDLL.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />

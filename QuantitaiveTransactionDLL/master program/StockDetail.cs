@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using NPlot;
+using QuantitaiveTransactionDLL;
+using System;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using NPlot;
-using QuantitaiveTransactionDLL;
-using System.Collections;
 
 namespace master_program
 {
@@ -21,9 +15,9 @@ namespace master_program
             
             InitializeComponent();
             KLine("600000", DaysCount);
-            this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseWheel);
+            this.MouseWheel += new MouseEventHandler(Panel1_MouseWheel);
         }
-        private void panel1_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void Panel1_MouseWheel(object sender, MouseEventArgs e)
         {
             Console.WriteLine("滚动事件已被捕捉");
             Console.WriteLine(e.Delta);
@@ -34,16 +28,18 @@ namespace master_program
         }
         public void KLine(string code,int dayRange)
         {
-            
+
             // --- Plotting ---  
-            this.KlineChart.Clear();
-            this.amountChart.Clear();
-                         ////////网格//////////
-              Grid mygrid = new Grid();
-                         mygrid.HorizontalGridType = Grid.GridType.Fine;
-                         mygrid.VerticalGridType = Grid.GridType.Fine;
-            this.KlineChart.Add(mygrid);
-            this.amountChart.Add(mygrid);
+            KlineChart.Clear();
+            amountChart.Clear();
+            ////////网格//////////
+            Grid mygrid = new Grid()
+            {
+                HorizontalGridType = Grid.GridType.Fine,
+                VerticalGridType = Grid.GridType.Fine
+            };
+            KlineChart.Add(mygrid);
+            amountChart.Add(mygrid);
             KlineChart.Title = "K线图";
             ///////水平线//////////
             //LinePlot lp3 = new LinePlot();
@@ -91,32 +87,36 @@ namespace master_program
 
             ///////蜡烛图///////////
             //string[] times = { "0", "1"," 2"," 3", "4"," 5" };
-            CandlePlot cp = new CandlePlot();
-            cp.Style = CandlePlot.Styles.Filled;
-            cp.CloseData = closes;
-            cp.OpenData = opens;
-            cp.LowData = lows;
-            cp.HighData = highs;
-            cp.AbscissaData = dates;
-            cp.BullishColor = Color.Red;
-            cp.BearishColor = Color.Green;
-            HistogramPlot hp3 = new HistogramPlot();
-            hp3.AbscissaData = dates;
-            hp3.OrdinateData = amount;
-            hp3.Color = Color.Yellow;
-            hp3.BaseWidth = 0.1f;
-            
-            hp3.Filled = true;
-            hp3.RectangleBrush = RectangleBrushes.Solid.Blue;
-            
+            CandlePlot cp = new CandlePlot()
+            {
+                Style = CandlePlot.Styles.Filled,
+                CloseData = closes,
+                OpenData = opens,
+                LowData = lows,
+                HighData = highs,
+                AbscissaData = dates,
+                BullishColor = Color.Red,
+                BearishColor = Color.Green
+            };
+            HistogramPlot hp3 = new HistogramPlot()
+            {
+                AbscissaData = dates,
+                OrdinateData = amount,
+                Color = Color.Yellow,
+                BaseWidth = 0.1f,
+
+                Filled = true,
+                RectangleBrush = RectangleBrushes.Solid.Blue
+            };
+
             //amountChart.XAxis1 = hp3.SuggestXAxis();
             //amountChart.YAxis1 = hp3.SuggestYAxis();
             //hp3.AbscissaData = "test";
             cp.Centered = false;
             //cp.SuggestXAxis().Label = "日期";
             //cp.SuggestYAxis().Label = "价格";
-          //  amountChart.YAxis2.Label = "金额(万)";
-            this.KlineChart.Add(cp);
+            //  amountChart.YAxis2.Label = "金额(万)";
+            KlineChart.Add(cp);
             KlineChart.XAxis1.Label = "日期";
             //plotSurface2D1.XAxis2.Label = "tst";
             KlineChart.YAxis1.Label = "价格";
@@ -128,9 +128,9 @@ namespace master_program
             //plotSurface2D1.AddInteraction(new NPlot.Windows.PlotSurface2D.Interactions.AxisDrag(true));
 
 
-            this.amountChart.Add(hp3);
-            this.amountChart.Refresh();
-            this.KlineChart.Refresh();
+            amountChart.Add(hp3);
+            amountChart.Refresh();
+            KlineChart.Refresh();
         }
     }
 }

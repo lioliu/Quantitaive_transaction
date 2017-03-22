@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.KlineChart = new NPlot.Windows.PlotSurface2D();
             this.amountChart = new NPlot.Windows.PlotSurface2D();
+            this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.SuspendLayout();
             // 
             // KlineChart
@@ -78,6 +81,11 @@
             this.amountChart.YAxis1 = null;
             this.amountChart.YAxis2 = null;
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.Text = "notifyIcon1";
+            this.notifyIcon1.Visible = true;
+            // 
             // StockDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -95,5 +103,7 @@
 
         private NPlot.Windows.PlotSurface2D KlineChart;
         private NPlot.Windows.PlotSurface2D amountChart;
+        private System.DirectoryServices.DirectoryEntry directoryEntry1;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }

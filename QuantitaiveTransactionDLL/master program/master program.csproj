@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -60,11 +61,17 @@
     <Compile Include="StockDetail.Designer.cs">
       <DependentUpon>StockDetail.cs</DependentUpon>
     </Compile>
-    <Compile Include="stockWarning.cs">
+    <Compile Include="StockLine.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="stockWarning.Designer.cs">
-      <DependentUpon>stockWarning.cs</DependentUpon>
+    <Compile Include="StockLine.Designer.cs">
+      <DependentUpon>StockLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StockWarning.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StockWarning.Designer.cs">
+      <DependentUpon>StockWarning.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,8 +87,11 @@
     <EmbeddedResource Include="StockDetail.resx">
       <DependentUpon>StockDetail.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="stockWarning.resx">
-      <DependentUpon>stockWarning.cs</DependentUpon>
+    <EmbeddedResource Include="StockLine.resx">
+      <DependentUpon>StockLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StockWarning.resx">
+      <DependentUpon>StockWarning.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
