@@ -92,7 +92,7 @@ namespace stock_crawl
 
         public static void run_snapdata()
         {
-            DataSet stock_list = DBUtility.get_stock_list();
+            DataSet stock_list = DBUtility.Get_stock_list();
             string[] list = new string[stock_list.Tables[0].Rows.Count];
             for (int i = 0; i < stock_list.Tables[0].Rows.Count; i++)
             {

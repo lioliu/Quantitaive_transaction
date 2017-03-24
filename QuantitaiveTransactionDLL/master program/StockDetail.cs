@@ -59,7 +59,7 @@ namespace master_program
             string QueryStr = string.Format("select * from ( "+
                               " select days, open, high, low, close,amount, row_number() over(order by days desc ) as rn from "+ " STOCK_HIS_DATA where code = '{0}' " +
                " ) where rn between 1 and {1} order by rn desc ",code,dayRange);
-            DataSet ds = DBUtility.get_data(QueryStr);
+            DataSet ds = DBUtility.Get_data(QueryStr);
             int rowsCount = ds.Tables[0].Rows.Count;
             double[] opens, closes, highs, lows,amount;
             DateTime[] dates = new DateTime[rowsCount];

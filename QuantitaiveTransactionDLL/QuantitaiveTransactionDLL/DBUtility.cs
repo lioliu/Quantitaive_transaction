@@ -15,7 +15,7 @@ namespace QuantitaiveTransactionDLL
         /// </summary>
         private static string connect_string = "Data Source=( DESCRIPTION = ( ADDRESS = ( PROTOCOL = TCP ) ( HOST = 10.18.3.229 ) ( PORT = 1521 ) ) ( CONNECT_DATA = ( SERVICE_NAME=ORCL ) ) );" +
             "user id=lioliu;password=647094;"; 
-        public static string power_connect_string = "Data Source=( DESCRIPTION = ( ADDRESS = ( PROTOCOL = TCP ) ( HOST = 10.18.3.229 ) ( PORT = 1521 ) ) ( CONNECT_DATA = ( SERVICE_NAME=ORCL ) ) );" +
+        private static string PowerConnectString = "Data Source=( DESCRIPTION = ( ADDRESS = ( PROTOCOL = TCP ) ( HOST = 10.18.3.229 ) ( PORT = 1521 ) ) ( CONNECT_DATA = ( SERVICE_NAME=ORCL ) ) );" +
             "user id=lioliu;password=647094;";
         #region Execute sql
         /// <summary>
@@ -23,10 +23,10 @@ namespace QuantitaiveTransactionDLL
         /// </summary>
         /// <param name="sql">Statement to be executed</param>
         /// <returns> affected rows</returns>
-        public static int execute_sql(string sql)
+        public static int Execute_sql(string sql)
         {
             int count = 0;
-            OracleConnection con = new OracleConnection(power_connect_string);
+            OracleConnection con = new OracleConnection(PowerConnectString);
             try
             {
                 con.Open();
@@ -53,13 +53,15 @@ namespace QuantitaiveTransactionDLL
         /// </summary>
         /// <param name="sql_list">the list of Statements to be executed</param>
         /// <returns> affected rows</returns>
-        public static int execute_sql(List<string> sql_list)
+        public static int Execute_sql(List<string> sql_list)
         {
             int count = 0;
-            OracleConnection con = new OracleConnection(power_connect_string);
+            OracleConnection con = new OracleConnection(PowerConnectString);
             con.Open();
-            OracleCommand cmd = new OracleCommand();
-            cmd.Connection = con;
+            OracleCommand cmd = new OracleCommand()
+            {
+                Connection = con
+            };
             //create the transaction
             OracleTransaction transaction = con.BeginTransaction();
             cmd.Transaction = transaction;
@@ -95,7 +97,7 @@ namespace QuantitaiveTransactionDLL
         /// </summary>
         /// <param name="sql">query statement</param>
         /// <returns>result data</returns>
-        public static DataSet get_data(string sql)
+        public static DataSet Get_data(string sql)
         {
             DataSet data_set = new DataSet();
             DataTable data_table = new DataTable();
@@ -128,7 +130,7 @@ namespace QuantitaiveTransactionDLL
         /// </summary>
         /// <param name="list_sql">the list of the statements to be execute</param>
         /// <returns>result data</returns>
-        public static DataSet get_data(List<string> list_sql)
+        public static DataSet Get_data(List<string> list_sql)
         {
             DataSet data_set = new DataSet();
             DataTable data_table = new DataTable();
@@ -137,8 +139,10 @@ namespace QuantitaiveTransactionDLL
             try
             {
                 con.Open();
-                OracleCommand cmd = new OracleCommand();
-                cmd.Connection = con;
+                OracleCommand cmd = new OracleCommand()
+                {
+                    Connection = con
+                };
                 foreach (string sql in list_sql)
                 {
                     cmd.CommandText = sql;
@@ -172,7 +176,7 @@ namespace QuantitaiveTransactionDLL
         /// <param name="procedure_name">procedure to be execute</param>
         /// <param name="parms">oracle parameters</param>
         /// <returns>result parameters</returns>
-        public static OracleParameter[] execute_procedure(string procedure_name,OracleParameter[] parms)
+        public static OracleParameter[] Execute_procedure(string procedure_name,OracleParameter[] parms)
         {
             DataTable data_table = new DataTable();
             OracleConnection con = new OracleConnection(connect_string);
@@ -211,14 +215,16 @@ namespace QuantitaiveTransactionDLL
         /// <param name="procedure_name">procedure to be execute</param>
         /// <param name="parms">pracle parameters</param>
         /// <param name="data_set">the data set to get the data</param>
-        public static void execute_procedure(string procedure_name,OracleParameter[] parms,out DataSet data_set)
+        public static void Execute_procedure(string procedure_name,OracleParameter[] parms,out DataSet data_set)
         {
             DataTable data_table = new DataTable();
             OracleDataAdapter oda = new OracleDataAdapter();
             OracleConnection con = new OracleConnection();
-            OracleCommand cmd = new OracleCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = procedure_name;
+            OracleCommand cmd = new OracleCommand()
+            {
+                CommandType = CommandType.StoredProcedure,
+                CommandText = procedure_name
+            };
             data_set = new DataSet();
             try
             {
@@ -259,16 +265,21 @@ namespace QuantitaiveTransactionDLL
         {
           
         }
-
-        public static DataSet get_stock_list()
+        /// <summary>
+        /// get stock list
+        /// </summary>
+        /// <returns></returns>
+        public static DataSet Get_stock_list()
         {
-            DataSet ds = get_data("select Code from stock_list");
-            return ds;
+            return Get_data("select Code from stock_list");
         }
-
+        /// <summary>
+        /// return the stock list in 
+        /// </summary>
+        /// <returns></returns>
         public static string[] GetStockList()
         {
-            DataSet ds = get_data("select Code , Name from stock_list");
+            DataSet ds = Get_data("select Code , Name from stock_list");
             string[] list = new string[ds.Tables[0].Rows.Count];
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {

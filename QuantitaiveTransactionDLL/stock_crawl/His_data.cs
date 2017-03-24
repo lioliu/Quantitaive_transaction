@@ -40,11 +40,11 @@ namespace stock_crawl
             //clearn the data in database 
             ///add code here
           
-            DBUtility.execute_sql("DELETE FROM STOCK_HIS_DATA");
+            DBUtility.Execute_sql("DELETE FROM STOCK_HIS_DATA");
 
             //get the stock list
 
-            DataSet stock_list = DBUtility.get_stock_list();
+            DataSet stock_list = DBUtility.Get_stock_list();
             
             string total;
             for (int i = 0; i < stock_list.Tables[0].Rows.Count; i++)
@@ -78,7 +78,7 @@ namespace stock_crawl
                 insertscript.Add(insert);
                 
             }
-            int result = DBUtility.execute_sql(insertscript);
+            int result = DBUtility.Execute_sql(insertscript);
             Console.WriteLine(result);
             return result;
 
@@ -93,7 +93,7 @@ namespace stock_crawl
             Random rnd = new Random();
             base_crawl crawl = new base_crawl();
             string json = crawl.run("http://yunhq.sse.com.cn:32041/v1/sh1/dayk/"+code+ "?callback=&select=date%2Copen%2Chigh%2Clow%2Cclose%2Cvolume&begin=-2&end=-1&_=" +rnd.Next() );
-            json = Json_formater.his_data(json);
+            json = Json_formater.FormatHisData(json);
             His_data his_data = JsonConvert.DeserializeObject<His_data>(json);
             return his_data.total;
         }
@@ -109,7 +109,7 @@ namespace stock_crawl
             base_crawl crawl = new base_crawl();
             string URL = String.Format("http://yunhq.sse.com.cn:32041/v1/sh1/dayk/{0}?callback=&select=date%2Copen%2Chigh%2Clow%2Cclose%2Cvolume&begin=-{1}&end=-1&_={2}", code,total,rnd.Next());
             string json = crawl.run(URL);
-            json = Json_formater.his_data(json);
+            json = Json_formater.FormatHisData(json);
             His_data his_data = JsonConvert.DeserializeObject<His_data>(json);
             DataTable dt = covert_to_datatable(his_data);
             return dt;
@@ -157,7 +157,7 @@ namespace stock_crawl
                                 " where base.code = op.code and base.code = cl.code " +
                                 "and base.days = to_char(sysdate, 'yyyymmdd') " +
                                 "group by base.code ,days,op.price,cl.price";
-            DBUtility.execute_sql(sql);
+            DBUtility.Execute_sql(sql);
         }
 
 

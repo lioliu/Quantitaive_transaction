@@ -49,7 +49,7 @@ namespace Crawler_WinFrom
             if (DateTime.Now.Hour == 16)
             {
                 WriteLog.Write($"{DateTime.Now.ToString()} the insert line data finished convert the line data to his data.");
-                His_data.Convert_linedata_to_hisdata();
+                His_data.ConvertLineToHis();
                 crawl.Enabled = false;
                 crawl.Dispose();
                 WriteLog.Write($"{DateTime.Now.ToString()} the crawler stoped.");
@@ -57,13 +57,13 @@ namespace Crawler_WinFrom
             }
             else if(DateTime.Now.Hour == 15 && (DateTime.Now.Minute >= 30 && DateTime.Now.Minute < 35))
             {
-                DBUtility.execute_sql($"delete from stock_line_data where days ='{sysdate}'");
+                DBUtility.Execute_sql($"delete from stock_line_data where days ='{sysdate}'");
                 WriteLog.Write($"{DateTime.Now.ToString()} the trade is end  reinsert the line data.");
-                Line_data.load_line_data();
+                Line_data.LoadLineData();
             }
             else
             {
-                DataSet ds = DBUtility.get_stock_list();
+                DataSet ds = DBUtility.Get_stock_list();
                 List<string> stockList = new List<string> { };
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
@@ -71,9 +71,9 @@ namespace Crawler_WinFrom
                 }
                 foreach (var item in stockList)
                 {
-                    saved = Line_data.dataCount(item, sysdate);
+                    saved = Line_data.CountData(item, sysdate);
                     DataTable dt = Line_data.get_line_data(item);
-                    Line_data.save_to_database(dt, saved);
+                    Line_data.SaveData(dt, saved);
                     if (saved == 241) stockList.Remove(item);
                 }
             }
@@ -86,7 +86,7 @@ namespace Crawler_WinFrom
         /// <returns></returns>
         private Boolean TradeDay(string sysdate)
         {
-            return Line_data.GetLineDataObject("000001").date.ToString().Equals(sysdate) ? true : false; 
+            return Line_data.GetLineDataObject("000001").Date.ToString().Equals(sysdate) ? true : false; 
         }
 
         

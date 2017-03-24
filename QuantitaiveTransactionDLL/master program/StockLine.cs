@@ -31,7 +31,7 @@ namespace master_program
         {
             #region get stock data
             string queryStr = $"select days,lpad(time,6,'0'),PRICE,VOLUME from stock_line_data where code ='{code}' and days ='{Day}' order by days desc,lpad(time,6,'0')";
-            DataSet ds = DBUtility.get_data(queryStr);
+            DataSet ds = DBUtility.Get_data(queryStr);
             int rowsCount = ds.Tables[0].Rows.Count;
             double[] price, volume;
             price = new double[rowsCount];

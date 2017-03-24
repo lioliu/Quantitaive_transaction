@@ -8,7 +8,7 @@ namespace QuantitaiveTransactionDLL
 {
     public class Json_formater
     {
-        public static string his_data(string str)
+        public static string FormatHisData(string str)
         {
             str = str.Remove(0, str.IndexOf("(") + 1).Replace(")", "");
             //change '[' / ']' to '{'/'}' except the first and the last one
@@ -57,7 +57,7 @@ namespace QuantitaiveTransactionDLL
         }
 
 
-        public static string line_data(string str)
+        public static string FormatLinedata(string str)
         {
             str = str.Remove(0, str.IndexOf("(") + 1).Replace(")", "");
             //change '[' / ']' to '{'/'}' except the first and the last one

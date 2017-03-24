@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using SunyahSMS.SSPU.WebAPI.Message;
 using System.Net;
 using Newtonsoft.Json;
@@ -30,32 +28,24 @@ namespace QuantitaiveTransactionDLL
         {
             using (WebClient wc = CreateWebClient())
             {
+
+                List<string> list = new List<string>
+                {
+                    telephone
+                };
                 string json = null;
-
-                
-                SendSMMessage msg = new SendSMMessage();
-
-                
+                SendSMMessage msg = new SendSMMessage()
+                {
+                    MsgContent = message,
+                    Numbers = list,
+                    Remark = "remark",
+                    MsgId = Guid.NewGuid().ToString(),
+                    Sign = "【股票预警】"
+                };             
                 SetAccountInfo(msg);
-
-                msg.MsgContent = message;
-
-                List<string> list = new List<string>();
-                list.Add(telephone);
-                msg.Numbers = list;
-
-                msg.Remark = "remark";
-
-                msg.MsgId = Guid.NewGuid().ToString();
-
-                //sign must have 【 】
-                msg.Sign = "【股票预警】";
-                
                 json = JsonConvert.SerializeObject(msg);
-                string resultJson = InvokeAPI(wc, SendUri, json);
 
-                string result = JsonConvert.DeserializeObject<string>(resultJson);
-                return result == null ?true:false;
+                return JsonConvert.DeserializeObject<string>(InvokeAPI(wc, SendUri, json)) == null ?true:false;
             }
         }
 
@@ -66,8 +56,10 @@ namespace QuantitaiveTransactionDLL
             WebRequest request = WebRequest.Create(url);
             request.GetResponse();
 
-            WebClient c = new WebClient();
-            c.Encoding = Encoding.UTF8;
+            WebClient c = new WebClient()
+            {
+                Encoding = Encoding.UTF8
+            };
             c.Headers[HttpRequestHeader.ContentType] = "application/json;charset=utf-8";
             return c;
         }

@@ -58,7 +58,7 @@ namespace Crawler
             {
                 using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
                 { sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + " the insert line data finished convert the line data to his data."); }
-                His_data.Convert_linedata_to_hisdata();
+                His_data.ConvertLineToHis();
                 crawl.Enabled = false;
                 crawl.Dispose();
                 using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
@@ -67,16 +67,16 @@ namespace Crawler
             }
             else if (DateTime.Now.Hour == 15 && (DateTime.Now.Minute >= 30 && DateTime.Now.Minute < 35))
             {
-                DBUtility.execute_sql(string.Format("delete from stock_line_data where days ='{0}'", sysdate));
+                DBUtility.Execute_sql(string.Format("delete from stock_line_data where days ='{0}'", sysdate));
                 using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
                 { sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + " the trade is end  reinsert the line data."); }
-                Line_data.load_line_data();
+                Line_data.LoadLineData();
 
             }
             else
             {
                 //get stock list
-                DataSet ds = DBUtility.get_stock_list();
+                DataSet ds = DBUtility.Get_stock_list();
                 List<string> stockList = new List<string> { };
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
@@ -84,16 +84,16 @@ namespace Crawler
                 }
                 foreach (var item in stockList)
                 {
-                    saved = Line_data.dataCount(item, sysdate);
+                    saved = Line_data.CountData(item, sysdate);
                     DataTable dt = Line_data.get_line_data(item);
-                    Line_data.save_to_database(dt, saved);
+                    Line_data.SaveData(dt, saved);
                     if (saved == 241) stockList.Remove(item);
                 }
             }
         }
         private Boolean TradeDay(string sysdate)
         {
-            return Line_data.GetLineDataObject("000001").date.ToString().Equals(sysdate) ? true : false; 
+            return Line_data.GetLineDataObject("000001").Date.ToString().Equals(sysdate) ? true : false; 
         }
 
         
