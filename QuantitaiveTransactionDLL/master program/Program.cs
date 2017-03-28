@@ -14,6 +14,9 @@ namespace master_program
         [STAThread]
         static void Main()
         {
+            
+
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //mode here to change the run form

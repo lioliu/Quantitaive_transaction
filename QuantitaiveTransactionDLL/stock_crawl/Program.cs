@@ -17,8 +17,9 @@ namespace stock_crawl
         static void Main(string[] args)
         {
 
-            //Line_data.load_line_data();
-            His_data.Convert_linedata_to_hisdata();
+            //Console.WriteLine(DBUtility.Execute_sql("select sysdate from dual"));
+            //Line_data.LoadLineData();
+            //His_data.Convert_linedata_to_hisdata();
             // Console.WriteLine(Line_data.dataCount("600000", "20170309"));
             //    using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true)) { sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "runned success."); }
             //    string sysdate = DateTime.Now.ToString("yyyyMMdd");

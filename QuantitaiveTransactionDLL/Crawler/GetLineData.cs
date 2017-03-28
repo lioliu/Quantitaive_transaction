@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using QuantitaiveTransactionDLL;
 using System.Timers;
 using System.Data;
@@ -22,18 +19,20 @@ namespace Crawler
                 sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "init the  timer.");
             }
             //init the timer
-            crawl = new Timer();
-            crawl.Interval = 1000*60*5;  //run every  5 minute
-            crawl.Elapsed += new ElapsedEventHandler(crawl_run);
-            crawl.AutoReset = true;
-            crawl.Enabled = true;
+            crawl = new Timer()
+            {
+                Interval = 1000 * 60 * 5,  //run every  5 minute
+                AutoReset = true,
+                Enabled = true
+            };
+            crawl.Elapsed += new ElapsedEventHandler(Run);
             using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
             {
                 sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "timer init ended .");
             }
         }
 
-        private void crawl_run(object sender, ElapsedEventArgs e)
+        private void Run(object sender, ElapsedEventArgs e)
         {
             using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
             {
