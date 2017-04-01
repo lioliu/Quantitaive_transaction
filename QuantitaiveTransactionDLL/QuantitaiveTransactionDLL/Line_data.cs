@@ -30,7 +30,7 @@ namespace QuantitaiveTransactionDLL
             {
                 DataTable dt = get_line_data(stock_list.Tables[0].Rows[i][0].ToString());
                 Task.Factory.StartNew(() => SaveData(dt));
-                Thread.Sleep(200);
+                //Thread.Sleep(200);
             }
             
         }

@@ -1,8 +1,8 @@
-﻿using Oracle.DataAccess.Client;
+﻿//using OleDb.DataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Data;
-
+using System.Data.OleDb;
 namespace QuantitaiveTransactionDLL
 {
     /// <summary>
@@ -13,10 +13,8 @@ namespace QuantitaiveTransactionDLL
         /// <summary>
         ///  connect string  normal for Query , power connect for Update\Delete\Insert
         /// </summary>
-        private static string connect_string = "Data Source=( DESCRIPTION = ( ADDRESS = ( PROTOCOL = TCP ) ( HOST = 10.18.3.229 ) ( PORT = 1521 ) ) ( CONNECT_DATA = ( SERVICE_NAME=ORCL ) ) );" +
-            "user id=lioliu;password=647094;"; 
-        private static string PowerConnectString = "Data Source=( DESCRIPTION = ( ADDRESS = ( PROTOCOL = TCP ) ( HOST = 10.18.3.229 ) ( PORT = 1521 ) ) ( CONNECT_DATA = ( SERVICE_NAME=ORCL ) ) );" +
-            "user id=lioliu;password=647094;";
+        private static string connect_string = "Provider=OraOLEDB.Oracle.1;Server=localhost;Data Source = (DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 10.18.3.229)(PORT = 1521)))(CONNECT_DATA = (SERVICE_NAME = ORCL)));User ID = lioliu; Password = 647094; ";
+        private static string PowerConnectString = "Provider=OraOLEDB.Oracle.1;Server=localhost;Data Source = (DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 10.18.3.229)(PORT = 1521)))(CONNECT_DATA = (SERVICE_NAME = ORCL)));User ID = lioliu; Password = 647094; ";
         #region Execute sql
         /// <summary>
         /// Execute SQL statement 
@@ -26,11 +24,11 @@ namespace QuantitaiveTransactionDLL
         public static int Execute_sql(string sql)
         {
             int count = 0;
-            OracleConnection con = new OracleConnection(PowerConnectString);
+            OleDbConnection con = new OleDbConnection(PowerConnectString);
             try
             {
                 con.Open();
-                OracleCommand cmd = new OracleCommand(sql, con);
+                OleDbCommand cmd = new OleDbCommand(sql, con);
                 //cmd.Connection = con;
                 //cmd.CommandText = sql;
                 count = cmd.ExecuteNonQuery();
@@ -56,14 +54,14 @@ namespace QuantitaiveTransactionDLL
         public static int Execute_sql(List<string> sql_list)
         {
             int count = 0;
-            OracleConnection con = new OracleConnection(PowerConnectString);
+            OleDbConnection con = new OleDbConnection(PowerConnectString);
             con.Open();
-            OracleCommand cmd = new OracleCommand()
+            OleDbCommand cmd = new OleDbCommand()
             {
                 Connection = con
             };
             //create the transaction
-            OracleTransaction transaction = con.BeginTransaction();
+            OleDbTransaction transaction = con.BeginTransaction();
             cmd.Transaction = transaction;
             try
             {
@@ -101,10 +99,10 @@ namespace QuantitaiveTransactionDLL
         {
             DataSet data_set = new DataSet();
             DataTable data_table = new DataTable();
-            OracleDataAdapter oda = null;
+            OleDbDataAdapter oda = null;
             try
             {
-                oda = new OracleDataAdapter(sql, connect_string);
+                oda = new OleDbDataAdapter(sql, connect_string);
                 oda.Fill(data_table);
                 
                 data_set.Tables.Add(data_table);
@@ -134,19 +132,19 @@ namespace QuantitaiveTransactionDLL
         {
             DataSet data_set = new DataSet();
             DataTable data_table = new DataTable();
-            OracleDataAdapter oda = null;
-            OracleConnection con = new OracleConnection(connect_string);
+            OleDbDataAdapter oda = null;
+            OleDbConnection con = new OleDbConnection(connect_string);
             try
             {
                 con.Open();
-                OracleCommand cmd = new OracleCommand()
+                OleDbCommand cmd = new OleDbCommand()
                 {
                     Connection = con
                 };
                 foreach (string sql in list_sql)
                 {
                     cmd.CommandText = sql;
-                    oda = new OracleDataAdapter(cmd);
+                    oda = new OleDbDataAdapter(cmd);
                     oda.Fill(data_table);
                     data_set.Tables.Add(data_table);
                     data_table = new DataTable();
@@ -171,16 +169,16 @@ namespace QuantitaiveTransactionDLL
         #region execute procedure
 
         /// <summary>
-        /// execute the procedure to get the data format as oracle parameter
+        /// execute the procedure to get the data format as OleDb parameter
         /// </summary>
         /// <param name="procedure_name">procedure to be execute</param>
-        /// <param name="parms">oracle parameters</param>
+        /// <param name="parms">OleDb parameters</param>
         /// <returns>result parameters</returns>
-        public static OracleParameter[] Execute_procedure(string procedure_name,OracleParameter[] parms)
+        public static OleDbParameter[] Execute_procedure(string procedure_name,OleDbParameter[] parms)
         {
             DataTable data_table = new DataTable();
-            OracleConnection con = new OracleConnection(connect_string);
-            OracleCommand cmd = new OracleCommand();
+            OleDbConnection con = new OleDbConnection(connect_string);
+            OleDbCommand cmd = new OleDbCommand();
             DataSet data_set = new DataSet();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = procedure_name;
@@ -188,7 +186,7 @@ namespace QuantitaiveTransactionDLL
             {
                 con.Open();
                 cmd.Connection = con;
-                foreach (OracleParameter parm in parms)
+                foreach (OleDbParameter parm in parms)
                 {
                     cmd.Parameters.Add(parm);
                 }
@@ -215,12 +213,12 @@ namespace QuantitaiveTransactionDLL
         /// <param name="procedure_name">procedure to be execute</param>
         /// <param name="parms">pracle parameters</param>
         /// <param name="data_set">the data set to get the data</param>
-        public static void Execute_procedure(string procedure_name,OracleParameter[] parms,out DataSet data_set)
+        public static void Execute_procedure(string procedure_name,OleDbParameter[] parms,out DataSet data_set)
         {
             DataTable data_table = new DataTable();
-            OracleDataAdapter oda = new OracleDataAdapter();
-            OracleConnection con = new OracleConnection();
-            OracleCommand cmd = new OracleCommand()
+            OleDbDataAdapter oda = new OleDbDataAdapter();
+            OleDbConnection con = new OleDbConnection();
+            OleDbCommand cmd = new OleDbCommand()
             {
                 CommandType = CommandType.StoredProcedure,
                 CommandText = procedure_name
@@ -230,7 +228,7 @@ namespace QuantitaiveTransactionDLL
             {
                 con.Open();
                 cmd.Connection = con;
-                foreach (OracleParameter parm in parms)
+                foreach (OleDbParameter parm in parms)
                 {
                     cmd.Parameters.Add(parm);
                 }
