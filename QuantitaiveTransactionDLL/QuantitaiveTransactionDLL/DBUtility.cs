@@ -29,8 +29,6 @@ namespace QuantitaiveTransactionDLL
             {
                 con.Open();
                 OleDbCommand cmd = new OleDbCommand(sql, con);
-                //cmd.Connection = con;
-                //cmd.CommandText = sql;
                 count = cmd.ExecuteNonQuery();
             }
             catch (Exception error)
