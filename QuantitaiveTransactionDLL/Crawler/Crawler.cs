@@ -59,6 +59,11 @@ namespace Crawler
                 }
                 get =  new GetLineData();
             }
+            else if (DateTime.Now.Hour == 18 && DateTime.Now.Minute == 00 )
+            {
+                //sent email to told the state of System
+                Warning.Check();
+            }
 
         }
     }

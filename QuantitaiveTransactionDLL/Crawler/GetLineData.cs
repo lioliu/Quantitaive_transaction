@@ -8,6 +8,7 @@ namespace Crawler
 {
     class GetLineData
     {
+   
         Timer crawl;
         /// <summary>
         /// main function
@@ -70,7 +71,8 @@ namespace Crawler
                 using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:\\log.txt", true))
                 { sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + " the trade is end  reinsert the line data."); }
                 Line_data.LoadLineData();
-
+                //clearn the crawler
+                crawl.Dispose();
             }
             else
             {
@@ -90,7 +92,7 @@ namespace Crawler
                 }
             }
         }
-        private Boolean TradeDay(string sysdate)
+         Boolean TradeDay(string sysdate)
         {
             return Line_data.GetLineDataObject("000001").Date.ToString().Equals(sysdate) ? true : false; 
         }

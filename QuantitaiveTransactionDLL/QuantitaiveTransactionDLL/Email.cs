@@ -4,7 +4,7 @@ using System.Net;
 
 namespace QuantitaiveTransactionDLL
 {
-    class Email
+    public class Email
     {
         /// <summary>
         /// Sent email to target location
