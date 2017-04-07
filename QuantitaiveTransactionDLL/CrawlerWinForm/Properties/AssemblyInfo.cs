@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Crawler WinFrom")]
+[assembly: AssemblyTitle("CrawlerWinForm")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Crawler WinFrom")]
+[assembly: AssemblyProduct("CrawlerWinForm")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("ad67c41d-15cb-43be-8d67-923ff058e28e")]
+[assembly: Guid("85beaaa0-cb70-40fe-b3bf-a2530df60a43")]
 
 // 程序集的版本信息由下列四个值组成: 
 //

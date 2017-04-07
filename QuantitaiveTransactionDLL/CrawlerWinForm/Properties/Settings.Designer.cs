@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Crawler_WinFrom.Properties
+namespace CrawlerWinForm.Properties
 {
 
 

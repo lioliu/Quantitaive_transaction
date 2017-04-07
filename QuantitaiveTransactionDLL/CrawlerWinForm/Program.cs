@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Crawler_WinFrom
+namespace CrawlerWinForm
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace Crawler_WinFrom
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new 股票数据获取());
+            Application.Run(new Form1());
         }
     }
 }
